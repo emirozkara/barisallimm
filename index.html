@@ -2,6 +2,9 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Artık barışalım mı</title>
 
 <style>
@@ -18,19 +21,20 @@ body {
     position: relative;
     z-index: 2;
     text-align: center;
+    padding: 20px;
     top: 40%;
     transform: translateY(-50%);
 }
 
 h1 {
-    font-size: 42px;
+    font-size: clamp(28px, 6vw, 48px);
     color: white;
     margin-bottom: 40px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 }
 
 button {
-    font-size: 26px;
+    font-size: clamp(20px, 5vw, 30px);
     padding: 15px 35px;
     margin: 10px;
     border: none;
@@ -50,17 +54,28 @@ button {
 }
 
 .fullscreen {
+
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
-    font-size: 60px;
+
+    font-size: 10vw;
+
     border-radius: 0;
-    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+
+    margin: 0;
 }
 
-/* Uçuşan kalpler */
+/* kalpler */
 
 .heart {
     position: absolute;
@@ -85,10 +100,12 @@ button {
 <body>
 
 <div id="container">
-    <h1 id="question">Artık barışalım mı </h1>
+
+    <h1>Artık barışalım mı </h1>
 
     <button id="yesBtn">Evet </button>
     <button id="noBtn">Hayır</button>
+
 </div>
 
 <script>
@@ -99,52 +116,52 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const container = document.getElementById("container");
 
-
-// 💗 kalp oluşturma fonksiyonu
 function createHeart() {
 
     const heart = document.createElement("div");
+
     heart.className = "heart";
+
     heart.innerHTML = "💗";
 
     heart.style.left = Math.random() * 100 + "vw";
+
     heart.style.fontSize = (Math.random() * 20 + 15) + "px";
 
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => heart.remove(), 6000);
 }
 
-// sürekli kalp üret
 setInterval(createHeart, 300);
 
 
-// hayır butonu sadece büyütür (kaçmaz)
 noBtn.onclick = function() {
 
     noCount++;
 
     let size = window.getComputedStyle(yesBtn).fontSize;
+
     yesBtn.style.fontSize = (parseFloat(size) * 1.8) + "px";
 
     if(noCount >= 3) {
 
         yesBtn.classList.add("fullscreen");
+
         noBtn.style.display = "none";
     }
 };
 
 
-// evet basınca mesaj
 yesBtn.onclick = function() {
 
     container.innerHTML = `
+
         <h1>
         Ben centilmenlik yapıp ilk adımı attım <br><br>
         Şimdi konuşma başlatma sırası sende 
         </h1>
+
     `;
 
     setInterval(createHeart, 120);
